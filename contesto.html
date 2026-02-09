@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contesto culturale • Giulietta e Romeo</title>
+  <style>
+:root{
+  --bg:#f6f1ea;
+  --paper:#ffffffcc;
+  --ink:#1f2a37;
+  --muted:#5b6472;
+  --accent:#8b3a3a;
+  --line:#d8cfc4;
+  --shadow: 0 10px 30px rgba(0,0,0,.10);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--ink);
+  background: radial-gradient(1200px 700px at 20% 0%, #ffffff, var(--bg));
+}
+header{
+  position:sticky; top:0; z-index:10;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, #ffffffdd, #ffffffaa);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1200px; margin:0 auto;
+  padding:14px 18px;
+  display:flex; gap:14px; align-items:center; justify-content:space-between;
+}
+.brand{display:flex; flex-direction:column; gap:2px;}
+.brand h1{
+  margin:0; font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size:22px; letter-spacing:.2px;
+}
+.brand .sub{color:var(--muted); font-size:13px}
+.nav{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;}
+.nav a{
+  text-decoration:none;
+  color:var(--ink);
+  border:1px solid var(--line);
+  background:#fff;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:13px;
+}
+.nav a[aria-current="page"]{border-color:#6d2b2b; box-shadow:0 6px 14px rgba(109,43,43,.16)}
+.nav a:hover{border-color:#c9b8aa}
+main{max-width:1200px; margin:0 auto; padding:18px;}
+.grid{
+  display:flex; gap:16px;
+  align-items:stretch;
+  min-height: calc(100vh - 86px);
+}
+.panel{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.left{flex: 0 0 44%;}
+.right{flex: 1;}
+@media (max-width: 980px){
+  .grid{flex-direction:column}
+  .left{flex-basis:auto}
+}
+.figure{position:relative; height:100%; background:#fff;}
+.figure img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#fff;
+}
+.content{
+  padding:20px 22px;
+  max-height: calc(100vh - 86px - 36px);
+  overflow:auto;
+}
+.content h2{
+  margin:0 0 10px 0;
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size:28px;
+}
+.content h3{
+  margin:18px 0 8px 0;
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size:20px;
+}
+.content p{margin:10px 0; line-height:1.55; color:var(--ink)}
+.content ul{margin:10px 0 10px 20px; padding:0}
+.content li{margin:6px 0; line-height:1.45}
+.badge{
+  display:inline-block;
+  border:1px dashed #cdbfb1;
+  color:var(--muted);
+  background:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  margin: 0 0 12px 0;
+}
+.footer-nav{
+  margin-top:16px;
+  display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+.footer-nav a{
+  text-decoration:none;
+  color:#fff;
+  background: linear-gradient(135deg, #9b3b3b, #6d2b2b);
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:13px;
+}
+.footer-nav a.secondary{
+  background:#fff;
+  color:var(--ink);
+  border:1px solid var(--line);
+}
+.carousel{
+  position:relative;
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+}
+.carousel button{
+  position:absolute; top:50%; transform:translateY(-50%);
+  border:none; cursor:pointer;
+  width:44px; height:44px;
+  border-radius:999px;
+  background:#ffffffcc;
+  border:1px solid var(--line);
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+.carousel button:hover{background:#fff}
+.carousel .prev{left:10px}
+.carousel .next{right:10px}
+.dots{
+  position:absolute; bottom:10px; left:0; right:0;
+  display:flex; gap:8px; justify-content:center;
+}
+.dots span{
+  width:10px; height:10px; border-radius:999px;
+  border:1px solid var(--line);
+  background:#ffffffcc;
+}
+.dots span.active{background:#6d2b2b; border-color:#6d2b2b}
+.video-wrap{
+  margin:16px 0;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+.video-wrap iframe{
+  width:100%;
+  aspect-ratio: 16 / 9;
+  height:auto;
+  display:block;
+}
+.index a{color:#6d2b2b; text-decoration:none}
+.index a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+  
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <h1>Giulietta e Romeo</h1>
+      <div class="sub">Percorso didattico • a cura di gbprof e Libera</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="trama.html">Trama</a>
+      <a href="contesto.html" aria-current="page">Contesto culturale</a>
+      <a href="monologo.html">Il monologo di Giulietta</a>
+      <a href="personaggi.html">Analisi dei personaggi</a>
+      <a href="giulietta.html">Carattere di Giulietta</a>
+      <a href="riflettiamo.html">Riflettiamo</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <div class="grid">
+      <section class="panel left">
+        <div class="figure">
+          <img src="assets/img/contesto.jpg" alt="Contesto culturale" />
+        </div>
+      </section>
+      <section class="panel right">
+        <div class="content">
+          <div class="badge">Sezione</div><h2>Contesto culturale</h2><p>Nel mondo rinascimentale in cui Shakespeare scrive, l’onore conta più della vita. Non è un valore astratto, ma il fondamento stesso dell’identità. Un individuo non esiste come persona autonoma: esiste come membro di una famiglia. Il nome che porta è più importante di ciò che sente o pensa. Per questo un’offesa non si discute, si vendica. Il duello non è un gesto estremo o folle, ma un comportamento normale, previsto, quasi obbligato. Mercuzio non può sottrarsi allo scontro senza perdere dignità. Romeo, dopo la morte dell’amico, non può scegliere di non reagire: non farlo significherebbe rinnegare sé stesso e il proprio nome. In quel mondo, non agire è già una colpa.</p>
+<p>Anche l’amore va letto con occhi diversi dai nostri. Oggi lo consideriamo un fatto privato, una scelta individuale. All’epoca, invece, il matrimonio è un contratto sociale. A decidere non sono i giovani, ma le famiglie. Serve a consolidare alleanze, potere, patrimonio. In questo contesto, Romeo e Giulietta non disobbediscono per impulso o per capriccio adolescenziale. Compiono un gesto profondamente rivoluzionario: scelgono l’amore contro l’ordine sociale. Il loro non è semplice romanticismo. È una forma di sovversione, perché mette in discussione il modo stesso in cui la società è costruita.</p>
+<p>Gli adulti, nel testo, non sono figure di riferimento libere e consapevoli. Al contrario, appaiono prigionieri del sistema che difendono. Nessuno di loro riesce davvero a capire ciò che sta accadendo; tutti cercano solo di gestire, di controllare, di mantenere l’ordine. Frate Lorenzo è razionale, riflessivo, ma commette un errore tipico del suo tempo: crede di poter controllare il destino con l’intelligenza. I genitori parlano continuamente di regole e di onore, ma producono solo altra violenza. La tragedia non nasce dall’errore dei giovani, ma dall’immobilità degli adulti, incapaci di cambiare sguardo.</p>
+<p>C’è poi un elemento che oggi tendiamo a sottovalutare: il tempo. Nel mondo di Shakespeare non esistono comunicazioni rapide. Una lettera può non arrivare. Un messaggero può essere fermato. Un ritardo può diventare fatale. Il dramma finale non è assurdo né forzato: è perfettamente plausibile per l’epoca. Il tempo non aiuta l’amore, non lo protegge. Al contrario, lo schiaccia, lo rende fragile, lo espone al fallimento.</p>
+<p>Infine, la morte. Con la sensibilità moderna tendiamo a leggere il suicidio solo come disperazione. Nella cultura tragica, invece, la morte può essere un atto estremo di coerenza. Meglio morire che vivere tradendo ciò che si è scelto di essere. Romeo e Giulietta non scelgono la morte perché sono deboli. La scelgono perché il mondo in cui vivono non ha spazio per loro, né per il tipo di amore che rappresentano.</p>
+<p>Per questo, la chiave di lettura è chiara:</p>
+<p>Romeo e Giulietta non muoiono perché amano troppo, ma perché vivono in un mondo che non sa cosa farsene dell’amore.</p>
+<p>l</p>
+          <div class="footer-nav"><a class="secondary" href="trama.html">← Indietro</a><a class="secondary" href="index.html">Torna alla Home</a><a href="monologo.html">Avanti →</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+function initCarousel(rootId, images){
+  const root = document.getElementById(rootId);
+  if(!root || !images || images.length < 2) return;
+  let idx = 0;
+  const img = root.querySelector("img");
+  const dots = root.querySelector(".dots");
+  // build dots
+  if(dots && dots.children.length === 0){
+    images.forEach(()=>{ const s=document.createElement("span"); dots.appendChild(s); });
+  }
+  function render(){
+    img.src = images[idx];
+    if(dots){
+      [...dots.children].forEach((d,i)=>d.classList.toggle("active", i===idx));
+    }
+  }
+  root.querySelector(".prev").addEventListener("click", ()=>{ idx = (idx-1+images.length)%images.length; render(); });
+  root.querySelector(".next").addEventListener("click", ()=>{ idx = (idx+1)%images.length; render(); });
+  render();
+}
+</script>
+</body>
+</html>

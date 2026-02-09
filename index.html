@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home • Giulietta e Romeo</title>
+  <style>
+:root{
+  --bg:#f6f1ea;
+  --paper:#ffffffcc;
+  --ink:#1f2a37;
+  --muted:#5b6472;
+  --accent:#8b3a3a;
+  --line:#d8cfc4;
+  --shadow: 0 10px 30px rgba(0,0,0,.10);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--ink);
+  background: radial-gradient(1200px 700px at 20% 0%, #ffffff, var(--bg));
+}
+header{
+  position:sticky; top:0; z-index:10;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, #ffffffdd, #ffffffaa);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1200px; margin:0 auto;
+  padding:14px 18px;
+  display:flex; gap:14px; align-items:center; justify-content:space-between;
+}
+.brand{display:flex; flex-direction:column; gap:2px;}
+.brand h1{
+  margin:0; font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size:22px; letter-spacing:.2px;
+}
+.brand .sub{color:var(--muted); font-size:13px}
+.nav{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;}
+.nav a{
+  text-decoration:none;
+  color:var(--ink);
+  border:1px solid var(--line);
+  background:#fff;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:13px;
+}
+.nav a[aria-current="page"]{border-color:#6d2b2b; box-shadow:0 6px 14px rgba(109,43,43,.16)}
+.nav a:hover{border-color:#c9b8aa}
+main{max-width:1200px; margin:0 auto; padding:18px;}
+.grid{
+  display:flex; gap:16px;
+  align-items:stretch;
+  min-height: calc(100vh - 86px);
+}
+.panel{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.left{flex: 0 0 44%;}
+.right{flex: 1;}
+@media (max-width: 980px){
+  .grid{flex-direction:column}
+  .left{flex-basis:auto}
+}
+.figure{position:relative; height:100%; background:#fff;}
+.figure img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#fff;
+}
+.content{
+  padding:20px 22px;
+  max-height: calc(100vh - 86px - 36px);
+  overflow:auto;
+}
+.content h2{
+  margin:0 0 10px 0;
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size:28px;
+}
+.content h3{
+  margin:18px 0 8px 0;
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size:20px;
+}
+.content p{margin:10px 0; line-height:1.55; color:var(--ink)}
+.content ul{margin:10px 0 10px 20px; padding:0}
+.content li{margin:6px 0; line-height:1.45}
+.badge{
+  display:inline-block;
+  border:1px dashed #cdbfb1;
+  color:var(--muted);
+  background:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  margin: 0 0 12px 0;
+}
+.footer-nav{
+  margin-top:16px;
+  display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+.footer-nav a{
+  text-decoration:none;
+  color:#fff;
+  background: linear-gradient(135deg, #9b3b3b, #6d2b2b);
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:13px;
+}
+.footer-nav a.secondary{
+  background:#fff;
+  color:var(--ink);
+  border:1px solid var(--line);
+}
+.carousel{
+  position:relative;
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+}
+.carousel button{
+  position:absolute; top:50%; transform:translateY(-50%);
+  border:none; cursor:pointer;
+  width:44px; height:44px;
+  border-radius:999px;
+  background:#ffffffcc;
+  border:1px solid var(--line);
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+.carousel button:hover{background:#fff}
+.carousel .prev{left:10px}
+.carousel .next{right:10px}
+.dots{
+  position:absolute; bottom:10px; left:0; right:0;
+  display:flex; gap:8px; justify-content:center;
+}
+.dots span{
+  width:10px; height:10px; border-radius:999px;
+  border:1px solid var(--line);
+  background:#ffffffcc;
+}
+.dots span.active{background:#6d2b2b; border-color:#6d2b2b}
+.video-wrap{
+  margin:16px 0;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+.video-wrap iframe{
+  width:100%;
+  aspect-ratio: 16 / 9;
+  height:auto;
+  display:block;
+}
+.index a{color:#6d2b2b; text-decoration:none}
+.index a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+  
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <h1>Giulietta e Romeo</h1>
+      <div class="sub">Percorso didattico • a cura di gbprof e Libera</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="trama.html">Trama</a>
+      <a href="contesto.html">Contesto culturale</a>
+      <a href="monologo.html">Il monologo di Giulietta</a>
+      <a href="personaggi.html">Analisi dei personaggi</a>
+      <a href="giulietta.html">Carattere di Giulietta</a>
+      <a href="riflettiamo.html">Riflettiamo</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <div class="grid">
+      <section class="panel left">
+        <div class="figure">
+          <img src="assets/img/copertina.jpg" alt="Copertina" />
+        </div>
+      </section>
+      <section class="panel right">
+        <div class="content">
+          
+<div class="badge">Indice del percorso</div>
+<h2>Benvenuti</h2>
+<p>Qui trovi la lezione completa, divisa in sezioni. Ogni pagina ha il testo a destra e le immagini a sinistra.</p>
+<ul class="index">
+<li><a href="trama.html">Trama</a></li>
+<li><a href="contesto.html">Contesto culturale</a></li>
+<li><a href="monologo.html">Il monologo di Giulietta</a></li>
+<li><a href="personaggi.html">Analisi dei personaggi</a></li>
+<li><a href="giulietta.html">Carattere di Giulietta</a></li>
+<li><a href="riflettiamo.html">Riflettiamo</a></li>
+</ul>
+
+          <div class="footer-nav"><span></span><a class="secondary" href="index.html">Torna alla Home</a><a href="trama.html">Avanti →</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+function initCarousel(rootId, images){
+  const root = document.getElementById(rootId);
+  if(!root || !images || images.length < 2) return;
+  let idx = 0;
+  const img = root.querySelector("img");
+  const dots = root.querySelector(".dots");
+  // build dots
+  if(dots && dots.children.length === 0){
+    images.forEach(()=>{ const s=document.createElement("span"); dots.appendChild(s); });
+  }
+  function render(){
+    img.src = images[idx];
+    if(dots){
+      [...dots.children].forEach((d,i)=>d.classList.toggle("active", i===idx));
+    }
+  }
+  root.querySelector(".prev").addEventListener("click", ()=>{ idx = (idx-1+images.length)%images.length; render(); });
+  root.querySelector(".next").addEventListener("click", ()=>{ idx = (idx+1)%images.length; render(); });
+  render();
+}
+</script>
+</body>
+</html>
