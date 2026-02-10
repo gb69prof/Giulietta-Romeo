@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Romeo e Giulietta – Fumetto</title>
+  <style>
+    :root{
+      --bg:#f4f1ea;
+      --panel:#ffffff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --bar:#141414;
+      --bar2:#1c1c1c;
+      --gold:#d6b25e;
+      --line:rgba(0,0,0,.10);
+      --shadow:0 10px 30px rgba(0,0,0,.10);
+      --radius:14px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 50% 0%, #fff7e6 0%, var(--bg) 55%, #efe9dc 100%);
+      color:var(--ink);
+      font-family:var(--font);
+    }
+
+    /* Top bar */
+    .topbar{
+      position:fixed; top:0; left:0; right:0;
+      height:64px;
+      z-index:50;
+      background:linear-gradient(180deg, var(--bar) 0%, var(--bar2) 100%);
+      color:#f7f2e8;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:0 14px;
+    }
+    .topbar .left, .topbar .center, .topbar .right{
+      display:flex; align-items:center; gap:10px;
+    }
+    .topbar .left{min-width:140px}
+    .topbar .right{margin-left:auto}
+    .brand{
+      display:flex; flex-direction:column; line-height:1.05;
+    }
+    .brand .title{
+      font-weight:800;
+      letter-spacing:.6px;
+      font-size:14px;
+      text-transform:uppercase;
+    }
+    .brand .subtitle{
+      font-size:12px; color:rgba(247,242,232,.75);
+      display:flex; gap:8px; align-items:center;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:min(56vw, 720px);
+    }
+    .pill{
+      font-size:11px;
+      padding:3px 8px;
+      border:1px solid rgba(214,178,94,.5);
+      color:#f7f2e8;
+      border-radius:999px;
+      background:rgba(214,178,94,.12);
+      white-space:nowrap;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:#f7f2e8;
+      border-radius:12px;
+      padding:10px 12px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      user-select:none;
+      transition:.15s transform, .15s background, .15s border-color;
+    }
+    .btn:hover{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.22)}
+    .btn:active{transform:translateY(1px)}
+    .btn svg{width:18px;height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+
+    .select{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:#f7f2e8;
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+      appearance:none;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    /* Layout */
+    .wrap{
+      padding:84px 16px 20px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns: 1fr}
+      .topbar .left{min-width:unset}
+      .brand .subtitle{max-width:62vw}
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.88));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .cardhead{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:linear-gradient(180deg, rgba(214,178,94,.10), rgba(214,178,94,.04));
+    }
+    .cardhead .h{
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .cardhead .small{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* Image panel */
+    .comicWrap{
+      padding:12px;
+    }
+    .comic{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:12px;
+      border:1px solid var(--line);
+      cursor:zoom-in;
+      background:#f8f6f1;
+    }
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .kbd{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:11px;
+      border:1px solid var(--line);
+      padding:2px 6px;
+      border-radius:8px;
+      background:rgba(255,255,255,.6);
+    }
+
+    /* Text panel */
+    .textWrap{
+      padding:14px;
+    }
+    .text{
+      white-space:pre-wrap;
+      line-height:1.55;
+      font-size:16px;
+    }
+    .text .muted{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(10,10,10,.82);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:100;
+      padding:18px;
+    }
+    .modal.open{display:flex}
+    .modal .frame{
+      max-width:min(980px, 96vw);
+      max-height:92vh;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .modal .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      color:#f7f2e8;
+      font-weight:700;
+    }
+    .modal .top .x{
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      border-radius:12px;
+      padding:10px 12px;
+      cursor:pointer;
+    }
+    .modal img{
+      width:100%;
+      height:auto;
+      max-height:86vh;
+      object-fit:contain;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#111;
+      cursor:zoom-out;
+    }
+
+    /* Home screen */
+    .home{
+      display:none;
+    }
+    .home.open{display:block}
+    .home .hero{
+      padding:20px;
+    }
+    .home h1{
+      margin:0 0 6px;
+      font-size:28px;
+      letter-spacing:.2px;
+    }
+    .home p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+    }
+    .home .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+    .actionBtn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      border-radius:14px;
+      padding:12px 14px;
+      cursor:pointer;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition:.15s transform, .15s background;
+    }
+    .actionBtn:hover{background:#fff}
+    .actionBtn:active{transform:translateY(1px)}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <button class="btn" id="btnHome" title="Home">
+        <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 10v10h5v-6h4v6h5V10"></path></svg>
+        <span>Home</span>
+      </button>
+    </div>
+
+    <div class="center brand">
+      <div class="title">Romeo e Giulietta</div>
+      <div class="subtitle">
+        <span id="pageTitle">Seleziona un atto</span>
+        <span class="pill" id="badge">—</span>
+      </div>
+    </div>
+
+    <div class="right">
+      <select class="select" id="actSelect" title="Seleziona Atto">
+        <option value="1">Atto I</option>
+        <option value="2">Atto II</option>
+        <option value="3">Atto III</option>
+        <option value="4">Atto IV</option>
+        <option value="5">Atto V</option>
+      </select>
+
+      <select class="select" id="pageSelect" title="Seleziona Pagina">
+        <option value="1">Pag. 1</option>
+        <option value="2">Pag. 2</option>
+        <option value="3">Pag. 3</option>
+        <option value="4">Pag. 4</option>
+        <option value="5">Pag. 5</option>
+      </select>
+
+      <button class="btn" id="btnPrev" title="Pagina precedente">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+      <button class="btn" id="btnNext" title="Pagina successiva">
+        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg>
+      </button>
+
+      <button class="btn" id="btnNextAct" title="Vai all'atto successivo">
+        <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7"></path><path d="M4 5l7 7-7 7"></path></svg>
+        <span>Atto →</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="home card open" id="homePanel">
+      <div class="hero">
+        <h1>Fumetto-libro</h1>
+        <p>
+          A sinistra la pagina del fumetto, a destra il testo della scena in formato <span class="kbd">.txt</span>.
+          Seleziona un atto e una pagina in alto, oppure premi “Atto →”.
+        </p>
+        <div class="actions">
+          <button class="actionBtn" id="startBtn">Inizia da Atto I – Pag. 1</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" id="reader" style="display:none;">
+      <article class="card">
+        <div class="cardhead">
+          <div>
+            <div class="h">Pagina fumetto</div>
+            <div class="small">Click sull’immagine per ingrandire a tutto schermo</div>
+          </div>
+          <div class="small" id="imgInfo">images/Atto-1-1.webp</div>
+        </div>
+        <div class="comicWrap">
+          <img id="comicImg" class="comic" src="images/Atto-1-1.webp" alt="Pagina fumetto" />
+          <div class="hint">
+            <span class="kbd">Click</span> ingrandisci · <span class="kbd">ESC</span> chiudi
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="cardhead">
+          <div>
+            <div class="h">Testo</div>
+            <div class="small">Caricato da file .txt</div>
+          </div>
+          <div class="small" id="txtInfo">txt/atto-1-1.txt</div>
+        </div>
+        <div class="textWrap">
+          <div class="text" id="txtContent"><span class="muted">Caricamento…</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modal full screen -->
+  <div class="modal" id="modal">
+    <div class="frame">
+      <div class="top">
+        <div id="modalTitle">Pagina fumetto</div>
+        <div class="x" id="modalClose">Chiudi ✕</div>
+      </div>
+      <img id="modalImg" src="" alt="Pagina fumetto a schermo intero" />
+    </div>
+  </div>
+
+  <script>
+    const els = {
+      homePanel: document.getElementById('homePanel'),
+      reader: document.getElementById('reader'),
+      btnHome: document.getElementById('btnHome'),
+      startBtn: document.getElementById('startBtn'),
+      actSelect: document.getElementById('actSelect'),
+      pageSelect: document.getElementById('pageSelect'),
+      btnPrev: document.getElementById('btnPrev'),
+      btnNext: document.getElementById('btnNext'),
+      btnNextAct: document.getElementById('btnNextAct'),
+      comicImg: document.getElementById('comicImg'),
+      txtContent: document.getElementById('txtContent'),
+      imgInfo: document.getElementById('imgInfo'),
+      txtInfo: document.getElementById('txtInfo'),
+      pageTitle: document.getElementById('pageTitle'),
+      badge: document.getElementById('badge'),
+      modal: document.getElementById('modal'),
+      modalImg: document.getElementById('modalImg'),
+      modalClose: document.getElementById('modalClose'),
+      modalTitle: document.getElementById('modalTitle')
+    };
+
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+    function parseHash(){
+      // #a=1&p=1
+      const h = location.hash.replace(/^#/, '').trim();
+      const out = { a: 1, p: 1 };
+      if(!h) return out;
+      const params = new URLSearchParams(h);
+      const a = parseInt(params.get('a') || '1', 10);
+      const p = parseInt(params.get('p') || '1', 10);
+      out.a = clamp(isNaN(a)?1:a, 1, 5);
+      out.p = clamp(isNaN(p)?1:p, 1, 5);
+      return out;
+    }
+
+    function setHash(a,p){
+      const params = new URLSearchParams();
+      params.set('a', String(a));
+      params.set('p', String(p));
+      location.hash = params.toString();
+    }
+
+    function filenames(a,p){
+      return {
+        img: `images/Atto-${a}-${p}.webp`,
+        txt: `txt/atto-${a}-${p}.txt`
+      };
+    }
+
+    async function loadText(url){
+      try{
+        const res = await fetch(url, { cache: "no-cache" });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const t = await res.text();
+        return t;
+      }catch(err){
+        return `File non trovato:\n${url}\n\n[Puoi aggiungere questo file nella cartella txt.]`;
+      }
+    }
+
+    async function render(){
+      const {a,p} = parseHash();
+      els.actSelect.value = String(a);
+      els.pageSelect.value = String(p);
+
+      const niceAct = `Atto ${["I","II","III","IV","V"][a-1]}`;
+      const nicePage = `Pagina ${p}`;
+      els.pageTitle.textContent = `${niceAct} – ${nicePage}`;
+      els.badge.textContent = `a=${a} · p=${p}`;
+
+      // switch view
+      els.homePanel.classList.remove('open');
+      els.homePanel.style.display = 'none';
+      els.reader.style.display = 'grid';
+
+      const {img, txt} = filenames(a,p);
+      els.imgInfo.textContent = img;
+      els.txtInfo.textContent = txt;
+
+      els.comicImg.src = img;
+      els.comicImg.alt = `${niceAct} – ${nicePage}`;
+
+      els.txtContent.innerHTML = `<span class="muted">Caricamento…</span>`;
+      const t = await loadText(txt);
+      // escape minimal
+      els.txtContent.textContent = t;
+
+      // update modal title
+      els.modalTitle.textContent = `${niceAct} – ${nicePage}`;
+      els.modalImg.src = img;
+    }
+
+    function showHome(){
+      history.replaceState(null, '', location.pathname + location.search);
+      els.reader.style.display = 'none';
+      els.homePanel.style.display = 'block';
+      els.homePanel.classList.add('open');
+      els.pageTitle.textContent = 'Seleziona un atto';
+      els.badge.textContent = '—';
+    }
+
+    function openModal(){
+      els.modalImg.src = els.comicImg.src;
+      els.modal.classList.add('open');
+      els.modal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal(){
+      els.modal.classList.remove('open');
+      els.modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Events
+    els.btnHome.addEventListener('click', showHome);
+    els.startBtn.addEventListener('click', () => setHash(1,1));
+
+    els.actSelect.addEventListener('change', () => {
+      const a = parseInt(els.actSelect.value, 10);
+      const p = parseInt(els.pageSelect.value, 10);
+      setHash(a,p);
+    });
+    els.pageSelect.addEventListener('change', () => {
+      const a = parseInt(els.actSelect.value, 10);
+      const p = parseInt(els.pageSelect.value, 10);
+      setHash(a,p);
+    });
+
+    els.btnPrev.addEventListener('click', () => {
+      const {a,p} = parseHash();
+      const np = p > 1 ? p-1 : 5;
+      setHash(a, np);
+    });
+    els.btnNext.addEventListener('click', () => {
+      const {a,p} = parseHash();
+      const np = p < 5 ? p+1 : 1;
+      setHash(a, np);
+    });
+    els.btnNextAct.addEventListener('click', () => {
+      const {a,p} = parseHash();
+      const na = a < 5 ? a+1 : 1;
+      setHash(na, p);
+    });
+
+    els.comicImg.addEventListener('click', openModal);
+    els.modalImg.addEventListener('click', closeModal);
+    els.modalClose.addEventListener('click', closeModal);
+
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') closeModal();
+      // quick nav on desktop
+      if(e.key === 'ArrowLeft'){
+        const {a,p} = parseHash();
+        setHash(a, p>1? p-1 : 5);
+      }
+      if(e.key === 'ArrowRight'){
+        const {a,p} = parseHash();
+        setHash(a, p<5? p+1 : 1);
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      if(location.hash && location.hash.includes('a=')) render();
+    });
+
+    // Boot
+    if(location.hash && location.hash.includes('a=')){
+      render();
+    }else{
+      showHome();
+    }
+  </script>
+</body>
+</html>
